@@ -17,13 +17,14 @@ describe('Sample test', () => {
 
 const baseUrl = 'https://jsonplaceholder.typicode.com/';
 
-// describe('Todos endpoint', () => {
-//     it('should return a 200 status code', async () => {
-//         const response = await request.get('/');
+describe('Todos endpoint', () => {
+    it('should return a 200 status code', async () => {
+        const response = await request.get(baseUrl);
 
-//         expect(response.statusCode).toBe(200);
-//     });
-// })
+        expect(response.statusCode).toBe(200);
+    });
+})
+
 
 describe('just simple fummy', () => {
     it('should be true', () => {
