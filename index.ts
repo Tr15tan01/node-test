@@ -4,6 +4,8 @@ const path = require('path')
 
 const app = express()
 
+const request = require('supertest');
+
 app.use(express.static(__dirname + '/public'));
 
 app.use(express.json())
@@ -57,6 +59,9 @@ app.route('/query')
 
 
 //matching
-app.get('/ab*cd', (req: Request, res: Response) => res.status(200).send('ab*cs'))
+// app.get('/ab*cd', (req: Request, res: Response) => res.status(200).send('ab*cs'))
+
+
 
 app.listen(3000, () => console.log('listening...'))
+module.exports = app;

@@ -45,3 +45,4 @@ app.route('/query')
 //matching
 app.get('/ab*cd', (req, res) => res.status(200).send('ab*cs'));
 app.listen(3000, () => console.log('listening...'));
+module.exports = app.listen(3000);
