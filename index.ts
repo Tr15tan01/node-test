@@ -10,8 +10,29 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(express.json())
 
+function delay(duration: number): void {
+    const startTime: number = Date.now()
+    while (Date.now() - startTime < duration) {
+        console.log('event loop is blocked..')
+    }
+}
+
 app.get('/', (req: Request, res: any) => {
     res.send('hi there')
+})
+
+app.get('/delay', (req: Request, res: any) => {
+    delay(6000)
+    res.send('hi there, block is ' + process.pid)
+})
+
+app.get('/crash', (req: Request, res: any) => {
+    setTimeout(() => {
+        console.log('chashing...')
+        //@ts-ignore
+        a = false;
+    }, 3000)
+    res.send('hi there, block is crashing ' + process.pid)
 })
 
 app.post('/foo', (req: Request, res: Response) => {

@@ -3,10 +3,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require('express');
 const path = require('path');
 const app = express();
+const request = require('supertest');
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
+function delay(duration) {
+    const startTime = Date.now();
+    while (Date.now() - startTime < duration) {
+        console.log('event loop is blocked..');
+    }
+}
 app.get('/', (req, res) => {
     res.send('hi there');
+});
+app.get('/delay', (req, res) => {
+    delay(6000);
+    res.send('hi there, block is ' + process.pid);
+});
+app.get('/crash', (req, res) => {
+    setTimeout(() => {
+        console.log('chashing...');
+        //@ts-ignore
+        a = false;
+    }, 3000);
+    res.send('hi there, block is crashing ' + process.pid);
 });
 app.post('/foo', (req, res) => {
     console.log(req.body);
@@ -43,6 +62,6 @@ app.route('/query')
     return res.send(req.query);
 });
 //matching
-app.get('/ab*cd', (req, res) => res.status(200).send('ab*cs'));
+// app.get('/ab*cd', (req: Request, res: Response) => res.status(200).send('ab*cs'))
 app.listen(3000, () => console.log('listening...'));
-module.exports = app.listen(3000);
+module.exports = app;
